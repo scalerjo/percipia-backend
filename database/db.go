@@ -1,15 +1,18 @@
 package database
 
-// TODO
+
 import (
 	"database/sql"
 	"fmt"
 	_ "github.com/lib/pq"
 	"os"
 )
+
+
 var DB *sql.DB
 var err error
 
+// Grab environment variables and connect to the database
 func ConnectDB() {
 
 	host := os.Getenv("HOST")

@@ -16,27 +16,34 @@ func GetAllTODO(c *gin.Context) {
 		return
 	}
 
-	// var response []JsonResponse
+	// result variable
 	var todos []types.TODO
 
-	// Foreach movie
+	// loop through each row and construct TODO objects
 	for rows.Next() {
 		var id int
 		var text string
 		var time int64
 
+		// scan the row
 		err = rows.Scan(&id, &text, &time)
 
 		if err != nil {
 			c.Status(400)
 			return
 		}
+
+		// construct the TODO object
 		todo := types.TODO{
 			ID: id,
 			Text: text,
 			Time: time,
 		}
+
+		// append to result variable
 		todos = append(todos, todo)
 	}
+
+	// Send result back to client
 	c.IndentedJSON(200, todos)
 }

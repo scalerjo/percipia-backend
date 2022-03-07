@@ -18,16 +18,19 @@ func CreateTODO(c *gin.Context) {
         return
     }
 
+	// Input Validation
 	if (len(newTODO.Text) == 0) || (len(newTODO.Text) > 199) || (newTODO.Time == 0) {
 		c.Status(402)
         return
 	}
 
+	// Query database and check for errors
 	_, err := database.DB.Exec("INSERT INTO todo(text, time) VALUES($1, $2)", newTODO.Text, newTODO.Time);
 	if err != nil {
 		c.Status(400)
 		return
 	}
 
+	// Signal to the client that the operation was successful
 	c.Status(200)
 }
