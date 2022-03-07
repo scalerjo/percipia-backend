@@ -18,7 +18,7 @@ func CreateTODO(c *gin.Context) {
         return
     }
 
-	if (len(newTODO.Text) == 0) || (newTODO.Time == 0) {
+	if (len(newTODO.Text) == 0) || (len(newTODO.Text) > 199) || (newTODO.Time == 0) {
 		c.Status(402)
         return
 	}
