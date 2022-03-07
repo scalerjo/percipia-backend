@@ -9,7 +9,7 @@ import (
 
 // Route to create a new TODO item.
 // Inserts into database
-func CreateTODO(c *gin.Context) {
+func UpdateTODO(c *gin.Context) {
 	var newTODO types.TODO
 
     // Call BindJSON to bind the received JSON
@@ -18,12 +18,12 @@ func CreateTODO(c *gin.Context) {
         return
     }
 
-	if (len(newTODO.Text) == 0) || (newTODO.Time == 0) {
+	if (len(newTODO.Text) == 0) || (newTODO.Time == 0) || (newTODO.ID == 0) {
 		c.Status(402)
         return
 	}
 
-	_, err := database.DB.Exec("INSERT INTO todo(text, time) VALUES($1, $2)", newTODO.Text, newTODO.Time);
+	_, err := database.DB.Exec("UPDATE todo SET text=$2, time=$3 WHERE id=$1", newTODO.ID, newTODO.Text, newTODO.Time);
 	if err != nil {
 		c.Status(400)
 		return

@@ -3,6 +3,7 @@ package types
 import "fmt"
 
 type TODO struct {
+	ID int
 	Text string
 	Time int64
 }
